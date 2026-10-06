@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Krishna — Data Engineer Portfolio"
+description = "A terminal-inspired personal portfolio for Krishna, a Data Engineer building reliable ETL pipelines for BFSI systems with PySpark, AWS, Databricks, and Airflow."
+version = "1.0.0"
+id = "artifacts/krishna-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18857
+
+[services.development]
+run = "pnpm --filter @workspace/krishna-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/krishna-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/krishna-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18857"
+BASE_PATH = "/"
